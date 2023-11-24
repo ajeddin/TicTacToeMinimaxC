@@ -67,5 +67,6 @@ scanf("\n%c",&continueChoice);
 }
 
     }
+    printf("\nThanks for playing!\n");
     return 0; 
 }

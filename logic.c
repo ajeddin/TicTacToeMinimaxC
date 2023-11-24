@@ -9,7 +9,7 @@ void displayBoard(char board[3][3]);
 void selectLocation(char symbol,char board[3][3],int choices[],int *counter);
 void setTurn(char *symbol);
 void aiMove(char board[3][3], int choices[],int *counter);
-int minimax(char board[3][3],int depth, int isMaxingorMining);
+int minimax(char board[3][3],int depth, bool isMaxingorMining);
 int checkWin(char board[3][3]);
 void playerSelection(int *isAiPlaying);
 
@@ -74,7 +74,7 @@ void aiMove(char board[3][3],int choices[],int *counter){
 
             board[row][col] = 'O';
 
-        int score = minimax(board,0,0);
+        int score = minimax(board,0,false);
             board[row][col] = initial;
         if (score > bestScore){
             bestScore=score;
@@ -93,12 +93,12 @@ void aiMove(char board[3][3],int choices[],int *counter){
 }
 
 
-int minimax(char board[3][3],int depth, int isMaxingorMining){
+int minimax(char board[3][3],int depth, bool isMaxingorMining){
     int result =   checkWin(board);
     if (result !=-2){
         return result;
     }
-    if (isMaxingorMining == 1){
+    if (isMaxingorMining){
         int bestScore = INT_MIN;
  for (int row = 0;row<3;row++){
 for (int col = 0;col<3;col++){
@@ -106,7 +106,7 @@ if (board[row][col]<59){
 
         char initial = board[row][col];
         board[row][col] = 'O';
-        int score = minimax(board,depth+1,0);
+        int score = minimax(board,depth+1,false);
         board[row][col] = initial;
         if (score > bestScore){
             bestScore=score;
@@ -125,7 +125,7 @@ if (board[row][col]<59){
         char initial = board[row][col];
 
         board[row][col] = 'X'; //Human input
-        int score = minimax(board,depth+1,1); // is maxing and depth +1. 
+        int score = minimax(board,depth+1,true); // is maxing and depth +1. 
         board[row][col] = initial; // resetting the change done on 212 
 
         if (score < bestScore){ 
